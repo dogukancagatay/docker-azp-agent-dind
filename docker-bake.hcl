@@ -3,8 +3,7 @@ variable "IMAGE_NAME" {
 }
 
 group "default" {
-    targets = [ "latest", "2.187.1" ]
-    // targets = [ "latest", "2.187.1", "2.175.2" ]
+    targets = [ "latest", "2.187.1", "2.175.2" ]
 }
 
 target "latest" {
