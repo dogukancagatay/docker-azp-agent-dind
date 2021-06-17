@@ -3,7 +3,7 @@ variable "IMAGE_NAME" {
 }
 
 group "default" {
-    targets = [ "latest", "2.187.1", "2.175.2" ]
+    targets = [ "latest", "2.187.1", "2.175.2", "2.153.1" ]
 }
 
 target "latest" {
@@ -36,5 +36,15 @@ target "2.175.2" {
     }
     tags = [
         "docker.io/${IMAGE_NAME}:2.175.2"
+    ]
+}
+
+target "2.153.1" {
+    inherits = ["latest"]
+    args = {
+        AGENT_VERSION = "2.153.1"
+    }
+    tags = [
+        "docker.io/${IMAGE_NAME}:2.153.1"
     ]
 }
