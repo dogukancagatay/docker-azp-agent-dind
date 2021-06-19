@@ -2,9 +2,12 @@ variable "IMAGE_NAME" {
     default = "dcagatay/azp-agent-dind"
 }
 
+variable "AGENT_VERSION" {
+    default = "2.187.2"
+}
+
 group "default" {
-    // targets = [ "latest", "2.187.1", "2.175.2", "2.153.1" ]
-    targets = [ "2.153.1" ]
+    targets = [ "version" ]
 }
 
 target "latest" {
@@ -13,39 +16,19 @@ target "latest" {
 //     platforms = [ "linux/amd64", "linux/arm/v7", "linux/arm64/v8" ]
     dockerfile = "Dockerfile"
     args = {
-        AGENT_VERSION = "2.187.1"
+        AGENT_VERSION = AGENT_VERSION
     }
     tags = [
         "docker.io/${IMAGE_NAME}:latest"
     ]
 }
 
-target "2.187.1" {
+target "version" {
     inherits = ["latest"]
     args = {
-        AGENT_VERSION = "2.187.1"
+        AGENT_VERSION = AGENT_VERSION
     }
     tags = [
-        "docker.io/${IMAGE_NAME}:2.187.1"
-    ]
-}
-
-target "2.175.2" {
-    inherits = ["latest"]
-    args = {
-        AGENT_VERSION = "2.175.2"
-    }
-    tags = [
-        "docker.io/${IMAGE_NAME}:2.175.2"
-    ]
-}
-
-target "2.153.1" {
-    inherits = ["latest"]
-    args = {
-        AGENT_VERSION = "2.153.1"
-    }
-    tags = [
-        "docker.io/${IMAGE_NAME}:2.153.1"
+        "docker.io/${IMAGE_NAME}:${AGENT_VERSION}"
     ]
 }
