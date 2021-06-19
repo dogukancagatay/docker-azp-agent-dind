@@ -2,7 +2,7 @@
 
 Docker-in-Docker integrated Azure Devops Pipelines Agent image for self-hosted agents. It is based on [dcagatay/ubuntu-dind](https://hub.docker.com/r/dcagatay/ubuntu-dind) image. This image uses [s6-overlay](https://github.com/just-containers/s6-overlay) to run multiple services inside Docker container.
 
-Image @DockerHub: [dcagatay/azp-agent-dind](https://hub.docker.com/r/dcagatay/ubuntu-dind).
+Image @DockerHub: [dcagatay/azp-agent-dind](https://hub.docker.com/r/dcagatay/azp-agent-dind).
 
 ## Tags
 
