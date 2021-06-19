@@ -30,7 +30,7 @@ jobs:
         with:
           push: true
         env:
-          AGENT_VERSION: ${{ matrix version }}
+          AGENT_VERSION: ${{ matrix.version }}
 
   bake-latest:
     runs-on: ubuntu-latest
