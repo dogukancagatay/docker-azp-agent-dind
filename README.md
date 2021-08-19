@@ -6,7 +6,10 @@ Image @DockerHub: [dcagatay/azp-agent-dind](https://hub.docker.com/r/dcagatay/az
 
 ## Tags
 
-- `2.188.3`, `latest`
+- `2.190.0`, `latest`
+- `2.189.0`
+- `2.188.4`
+- `2.188.3`
 - `2.187.2`
 - `2.187.1`
 - `2.175.2`
