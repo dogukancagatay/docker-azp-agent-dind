@@ -34,6 +34,13 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     fi; \
     curl -LsS "$AZP_AGENTPACKAGE_URL" | tar -xz
 
+# Install .NET CORE runtime
+RUN curl -fSL --retry 3 'https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb' -o /tmp/packages-microsoft-prod.deb && \
+    dpkg -i /tmp/packages-microsoft-prod.deb && \
+    rm -rf /tmp/packages-microsoft-prod.deb && \
+    apt-get update && apt-get install -y --no-install-recommends \
+      dotnet-runtime-3.1
+
 COPY ./start.sh .
 RUN chmod +x start.sh
 

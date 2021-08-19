@@ -12,7 +12,15 @@ jobs:
   bake-version:
     strategy:
       matrix:
-        version: [ "2.188.3", "2.187.2", "2.187.1", "2.175.2", "2.153.1" ]
+        version:
+          - 2.190.0
+          - 2.189.0
+          - 2.188.4
+          - 2.188.3
+          - 2.187.2
+          - 2.187.1
+          - 2.175.2
+          - 2.153.1
     runs-on: ubuntu-latest
     steps:
 
