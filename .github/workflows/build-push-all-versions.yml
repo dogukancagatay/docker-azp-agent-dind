@@ -1,14 +1,8 @@
 name: ci
 on:
-  push:
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-      - 'docker-compose.yml'
-      - 'check-agent-releases.sh'
-      - '.github/workflows/build-push-latest-version.yml'
-    branches:
-      - 'releases/**'
+  release:
+    types:
+      - created
 
 jobs:
 
