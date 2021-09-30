@@ -18,10 +18,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     iptables \
     gss-ntlmssp \
+    apt-utils \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
+# Install Azure Cli
+RUN curl -LsS 'https://aka.ms/InstallAzureCLIDeb' | bash \
   && rm -rf /var/lib/apt/lists/*
+
+# Install .NET CORE runtime
+RUN curl -fSL --retry 3 'https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb' -o /tmp/packages-microsoft-prod.deb && \
+    dpkg -i /tmp/packages-microsoft-prod.deb && \
+    rm -rf /tmp/packages-microsoft-prod.deb && \
+    apt-get update && apt-get install -y --no-install-recommends \
+      dotnet-runtime-3.1
 
 ARG TARGETARCH=amd64
 ARG AGENT_VERSION=2.188.3
@@ -34,12 +43,9 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     fi; \
     curl -LsS "$AZP_AGENTPACKAGE_URL" | tar -xz
 
-# Install .NET CORE runtime
-RUN curl -fSL --retry 3 'https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb' -o /tmp/packages-microsoft-prod.deb && \
-    dpkg -i /tmp/packages-microsoft-prod.deb && \
-    rm -rf /tmp/packages-microsoft-prod.deb && \
-    apt-get update && apt-get install -y --no-install-recommends \
-      dotnet-runtime-3.1
+RUN apt-get autoremove -y \
+  && apt-get autoclean -y \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY ./start.sh .
 RUN chmod +x start.sh
