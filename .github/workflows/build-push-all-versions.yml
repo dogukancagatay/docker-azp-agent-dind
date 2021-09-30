@@ -16,7 +16,6 @@ jobs:
     strategy:
       matrix:
         version:
-          - 2.192.0
           - 2.191.1
           - 2.190.0
           - 2.189.0
