@@ -41,7 +41,6 @@ You can build your own images specifying following build arguments.
 
 This image uses [dcagatay/ubuntu-dind:18.04](https://hub.docker.com/repository/docker/dcagatay/ubuntu-dind) as its base image, if you require more detailed build options, check its [docs](https://github.com/dogukancagatay/docker-ubuntu-dind).
 
-
 ## WARNING
 
 The `--privileged` argument has security implications.
