@@ -14,7 +14,9 @@ target "latest" {
     context = "."
     platforms = [ "linux/amd64" ]
 //     platforms = [ "linux/amd64", "linux/arm/v7", "linux/arm64/v8" ]
-    cache-from = "docker.io/${IMAGE_NAME}:latest"
+    cache-from = [
+        "docker.io/${IMAGE_NAME}:latest"
+    ]
     dockerfile = "Dockerfile"
     args = {
         AGENT_VERSION = AGENT_VERSION
