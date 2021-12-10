@@ -34,4 +34,4 @@ jobs:
           targets: latest,version
           push: true
         env:
-          AGENT_VERSION: 2.192.0
+          AGENT_VERSION: 2.195.2
