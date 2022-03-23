@@ -1,6 +1,6 @@
 name: build-push-latest-version
 on:
-  workflow_dispatch:
+  # workflow_dispatch:
   # schedule:
   #   - cron: "30 6 5 * *" # Run monthly
   push:
