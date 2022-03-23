@@ -20,6 +20,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install curl and jq
         run: sudo apt-get install -y curl jq
+      - name: Install curl and jq
+        run: NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp -c .
       - id: output_data
         run: echo "::set-output name=matrix::$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp -c .)"
     # this step is needed, so the output gets to the next defined job
