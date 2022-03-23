@@ -16,7 +16,9 @@ jobs:
   provide_matrix:
     runs-on: ubuntu-latest
     steps:
-      - name: Install xmllint
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install curl and jq
         run: sudo apt-get install -y curl jq
       - id: output_data
         run: echo "::set-output name=matrix::$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp .)"
