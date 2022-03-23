@@ -1,5 +1,7 @@
 name: ci
 on:
+  schedule:
+    - cron: '30 6 5 * *' # Run monthly
   push:
     paths-ignore:
       - 'README.md'
@@ -11,6 +13,16 @@ on:
       - master
 
 jobs:
+  provide_matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install xmllint
+        run: sudo apt-get install -y curl jq
+      - id: output_data
+        run: echo "::set-output name=matrix::$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp .)"
+    # this step is needed, so the output gets to the next defined job
+    outputs:
+        matrix: ${{ steps.output_data.outputs.matrix }}
 
   bake-latest:
     runs-on: ubuntu-latest
@@ -34,4 +46,9 @@ jobs:
           targets: latest,version
           push: true
         env:
-          AGENT_VERSION: 2.192.0
+          AGENT_VERSION: ${{ matrix.version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+          version: ${{fromJson(needs.provide_matrix.outputs.matrix)}}

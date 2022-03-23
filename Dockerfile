@@ -1,4 +1,5 @@
-FROM dcagatay/ubuntu-dind:18.04
+ARG UBUNTU_VERSION=18.04
+FROM dcagatay/ubuntu-dind:${UBUNTU_VERSION}
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
@@ -26,7 +27,7 @@ RUN curl -LsS 'https://aka.ms/InstallAzureCLIDeb' | bash \
   && rm -rf /var/lib/apt/lists/*
 
 # Install .NET CORE runtime
-RUN curl -fSL --retry 3 'https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb' -o /tmp/packages-microsoft-prod.deb && \
+RUN curl -fSL --retry 3 "https://packages.microsoft.com/config/ubuntu/${UBUNTU_VERSION}/packages-microsoft-prod.deb" -o /tmp/packages-microsoft-prod.deb && \
     dpkg -i /tmp/packages-microsoft-prod.deb && \
     rm -rf /tmp/packages-microsoft-prod.deb && \
     apt-get update && apt-get install -y --no-install-recommends \

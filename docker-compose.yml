@@ -1,9 +1,11 @@
 version: "3"
 services:
-
   base-agent:
-    build: ./
-    image: dcagatay/azp-agent-dind:latest
+    build:
+      context: .
+      args:
+        AGENT_VERSION: ${AGENT_VERSION:-2.202.2}
+    image: dcagatay/azp-agent-dind:${AGENT_VERSION:-latest}
     privileged: true
     environment:
       AZP_URL: "https://dev.azure.com/xxxyyzzz"

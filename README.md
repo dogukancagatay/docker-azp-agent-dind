@@ -6,13 +6,18 @@ Image @DockerHub: [dcagatay/azp-agent-dind](https://hub.docker.com/r/dcagatay/az
 
 ## Tags
 
-- `2.192.0`, `latest`
+- `2.200.2`, `latest`
+- `2.198.3`
+- `2.198.2`
+- `2.196.2`
+- `2.195.2`
+- `2.195.1`
+- `2.195.0`
+- `2.194.0`
+- `2.193.1`
+- `2.193.0`
+- `2.192.0`
 - `2.191.1`
-- `2.190.0`
-- `2.189.0`
-- `2.188.4`
-- `2.188.3`
-- `2.187.2`
 
 You can check all tags from [Docker Hub page](https://hub.docker.com/r/dcagatay/azp-agent-dind/tags?page=1&ordering=last_updated).
 
@@ -24,7 +29,7 @@ You can and should use it as a base image for your self-hosted agent and create 
 
 ### Running the Image
 
-```
+```sh
 docker run -it --privileged dcagatay/azp-agent-dind:latest /bin/bash
 ```
 
