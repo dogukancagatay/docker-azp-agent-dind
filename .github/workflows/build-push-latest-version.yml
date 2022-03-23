@@ -12,27 +12,6 @@ on:
       - master
 
 jobs:
-  # provide_matrix:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Install curl and jq
-  #       run: sudo apt-get install -y curl jq
-  #     - name: Install gather Azure Devops Agent versions from API
-  #       run: |
-  #         echo '{"version": '$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp -c . )'}' > versions.txt
-  #         cat ./versions.txt
-  #     - id: output_data
-  #       run: echo "::set-output name=matrix::$(cat ./versions.txt)"
-  #     - name: print set data
-  #       run: echo ${{steps.output_data.outputs.matrix}}
-  #     - name: print debug data
-  #       run: 'echo "::debug:: ${{steps.output_data.outputs.matrix}}"'
-  #   # this step is needed, so the output gets to the next defined job
-  #   outputs:
-  #     matrix: ${{steps.output_data.outputs.matrix}}
-
   bake-latest:
     runs-on: ubuntu-latest
     steps:
