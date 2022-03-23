@@ -60,8 +60,11 @@ jobs:
         with:
           targets: latest,version
           push: true
-        env:
-          AGENT_VERSION: ${{steps.version_provider.outputs.version}}
+          set: |
+            latest.args.AGENT_VERSION=${{steps.version_provider.outputs.version}}
+            version.args.AGENT_VERSION=${{steps.version_provider.outputs.version}}
+
+
           # AGENT_VERSION: ${{ matrix.version }}
 
     # strategy:
