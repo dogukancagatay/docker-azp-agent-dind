@@ -27,7 +27,7 @@ jobs:
             jq -r '.[] | select(.prerelease==false) | .name ' |
             head -n 1 |
             cut -d 'v' -f2)
-          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=version::[\"${VERSION}\"]"
       - name: debug
         run: |
           echo "::debug:: ${{steps.version_provider.outputs.version}}"
