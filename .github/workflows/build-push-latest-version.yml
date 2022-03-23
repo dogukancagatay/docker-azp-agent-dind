@@ -41,7 +41,12 @@ jobs:
       - name: Install gather Azure Devops Agent versions from API
         id: version_provider
         run: |
-          echo "::set-output name=version::$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp -c . )"
+          VERSION=$(curl -fsSN \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=2" |
+            jq -r '.[] | select(.prerelease==false) | .name ' |
+            cut -d 'v' -f2)
+          echo "::set-output name=version::$VERSION"
       - name: debug
         run: |
           echo "::debug:: ${{steps.version_provider.outputs.version}}"
