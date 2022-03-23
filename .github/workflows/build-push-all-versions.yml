@@ -6,27 +6,27 @@ on:
       - created
 
 jobs:
-  provide_matrix:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install curl and jq
-        run: sudo apt-get install -y curl jq
-      - name: Install gather Azure Devops Agent versions from API
-        id: version_provider
-        run: |
-          VERSION=$(curl -fsSN \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=100" |
-            jq -r '.[] | select(.prerelease==false) | .name ' |
-            tail -n +2 |
-            cut -d 'v' -f2)
-          echo "::set-output name=version::$VERSION"
-      - name: debug
-        run: |
-          echo "::debug:: ${{steps.version_provider.outputs.version}}"
-    # this step is needed, so the output gets to the next defined job
-    outputs:
-        version: ${{ steps.version_provider.outputs.version }}
+  # provide_matrix:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Install curl and jq
+  #       run: sudo apt-get install -y curl jq
+  #     - name: Install gather Azure Devops Agent versions from API
+  #       id: version_provider
+  #       run: |
+  #         VERSION=$(curl -fsSN \
+  #           -H "Accept: application/vnd.github.v3+json" \
+  #           "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=100" |
+  #           jq -r '.[] | select(.prerelease==false) | .name ' |
+  #           tail -n +2 |
+  #           cut -d 'v' -f2)
+  #         echo "::set-output name=version::$VERSION"
+  #     - name: debug
+  #       run: |
+  #         echo "::debug:: ${{steps.version_provider.outputs.version}}"
+  #   # this step is needed, so the output gets to the next defined job
+  #   outputs:
+  #       version: ${{ steps.version_provider.outputs.version }}
 
   bake-version:
     runs-on: ubuntu-latest
@@ -44,66 +44,68 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
           push: true
-        env:
-          AGENT_VERSION: ${{ matrix.version }}
+          tags: |
+            dcagatay/azp-agent-dind:${{ matrix.version }}
+          build-args: |
+            AGENT_VERSION=${{ matrix.version }}
 
     strategy:
-      matrix:
-        version: ${{fromJson(needs.provide_matrix.outputs.version)}}
       # matrix:
-      #   version:
-      #     - 2.200.2
-      #     - 2.198.3
-      #     - 2.198.2
-      #     - 2.196.2
-      #     - 2.195.2
-      #     - 2.195.1
-      #     - 2.195.0
-      #     - 2.194.0
-      #     - 2.193.1
-      #     - 2.193.0
-      #     - 2.192.0
-      #     - 2.191.1
-      #     - 2.190.0
-      #     - 2.189.0
-      #     - 2.188.4
-      #     - 2.188.3
-      #     - 2.187.2
-      #     - 2.186.1
-      #     - 2.185.1
-      #     - 2.184.2
-      #     - 2.183.1
-      #     - 2.182.1
-      #     - 2.181.2
-      #     - 2.181.1
-      #     - 2.181.0
-      #     - 2.179.0
-      #     - 2.177.1
-      #     - 2.175.2
-      #     - 2.174.3
-      #     - 2.174.2
-      #     - 2.174.1
-      #     - 2.173.0
-      #     - 2.172.2
-      #     - 2.172.1
-      #     - 2.171.1
-      #     - 2.170.1
-      #     - 2.169.1
-      #     - 2.168.2
-      #     - 2.166.4
-      #     - 2.166.3
-      #     - 2.165.2
-      #     - 2.165.0
-      #     - 2.164.8
-      #     - 2.164.7
-      #     - 2.164.6
-      #     - 2.163.1
-      #     - 2.162.0
-      #     - 2.160.1
-      #     - 2.160.0
-      #     - 2.159.2
-      #     - 2.158.1
-      #     - 2.158.0
+      #   version: ${{fromJson(needs.provide_matrix.outputs.version)}}
+      matrix:
+        version:
+          # - 2.200.2
+          - 2.198.3
+          - 2.198.2
+          - 2.196.2
+          - 2.195.2
+          - 2.195.1
+          - 2.195.0
+          - 2.194.0
+          - 2.193.1
+          - 2.193.0
+          - 2.192.0
+          - 2.191.1
+          - 2.190.0
+          - 2.189.0
+          - 2.188.4
+          - 2.188.3
+          - 2.187.2
+          - 2.186.1
+          - 2.185.1
+          - 2.184.2
+          - 2.183.1
+          - 2.182.1
+          - 2.181.2
+          - 2.181.1
+          - 2.181.0
+          - 2.179.0
+          - 2.177.1
+          - 2.175.2
+          - 2.174.3
+          - 2.174.2
+          - 2.174.1
+          - 2.173.0
+          - 2.172.2
+          - 2.172.1
+          - 2.171.1
+          - 2.170.1
+          - 2.169.1
+          - 2.168.2
+          - 2.166.4
+          - 2.166.3
+          - 2.165.2
+          - 2.165.0
+          - 2.164.8
+          - 2.164.7
+          - 2.164.6
+          - 2.163.1
+          - 2.162.0
+          - 2.160.1
+          - 2.160.0
+          - 2.159.2
+          - 2.158.1
+          - 2.158.0
