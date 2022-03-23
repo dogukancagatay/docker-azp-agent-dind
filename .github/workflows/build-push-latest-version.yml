@@ -15,6 +15,8 @@ on:
 jobs:
   provide_matrix:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{steps.version_provider.outputs.version}}
     steps:
       - name: Install curl and jq
         run: sudo apt-get install -y curl jq
@@ -30,10 +32,10 @@ jobs:
           echo "::set-output name=version::[\"${VERSION}\"]"
       - name: debug
         run: |
-          echo "::debug:: ${{steps.version_provider.outputs.version}}"
-    # this step is needed, so the output gets to the next defined job
-    outputs:
-      version: ${{ steps.version_provider.outputs.version }}
+          echo "::debug ${{steps.version_provider.outputs.version}}"
+      - name: debug2
+        run: |
+          echo "${{steps.version_provider.outputs.version}}" | jq -r
 
   bake-version:
     runs-on: ubuntu-latest
