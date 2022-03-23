@@ -1,5 +1,6 @@
 name: build-push-all-versions
 on:
+  workflow_dispatch:
   release:
     types:
       - created
