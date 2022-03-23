@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        AGENT_VERSION: ${AGENT_VERSION:-2.202.2}
+        AGENT_VERSION: ${AGENT_VERSION:-2.200.2}
     image: dcagatay/azp-agent-dind:${AGENT_VERSION:-latest}
     privileged: true
     environment:
