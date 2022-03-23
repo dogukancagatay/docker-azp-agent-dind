@@ -25,9 +25,13 @@ jobs:
           cat ./versions.txt
       - id: output_data
         run: echo "::set-output name=matrix::$(cat ./versions.txt)"
+      - name: print set data
+        run: echo ${{steps.output_data.outputs.matrix}}
+      - name: print debug data
+        run: 'echo "::debug:: ${{steps.output_data.outputs.matrix}}"'
     # this step is needed, so the output gets to the next defined job
     outputs:
-      matrix: ${{ steps.output_data.outputs.matrix }}
+      matrix: ${{steps.output_data.outputs.matrix}}
 
   bake-latest:
     runs-on: ubuntu-latest
