@@ -1,4 +1,4 @@
-name: ci
+name: build-and-push-all-versions
 on:
   release:
     types:
