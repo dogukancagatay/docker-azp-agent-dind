@@ -13,10 +13,8 @@ on:
       - master
 
 jobs:
-  provide_matrix:
+  bake-latest:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{steps.version_provider.outputs.version}}
     steps:
       - name: Install curl and jq
         run: sudo apt-get install -y curl jq
@@ -25,23 +23,13 @@ jobs:
         run: |
           VERSION=$(curl -fsSN \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=100" |
+            "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=2" |
             jq -r '.[] | select(.prerelease==false) | .name ' |
-            head -n 1 |
             cut -d 'v' -f2)
-          echo "::set-output name=version::[\"${VERSION}\"]"
+          echo "::set-output name=version::$VERSION"
       - name: debug
         run: |
-          echo "::debug ${{steps.version_provider.outputs.version}}"
-      - name: debug2
-        run: |
-          echo "${{steps.version_provider.outputs.version}}" | jq -r
-
-  bake-version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+          echo "::debug:: ${{steps.version_provider.outputs.version}}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -58,47 +46,6 @@ jobs:
           push: true
           tags: |
             dcagatay/azp-agent-dind:latest
-            dcagatay/azp-agent-dind:${{ matrix.version }}
+            dcagatay/azp-agent-dind:${{steps.version_provider.outputs.version}}
           build-args: |
-            AGENT_VERSION=${{ matrix.version }}
-
-    strategy:
-      matrix:
-        version: ${{fromJson(needs.provide_matrix.outputs.version)}}
-
-  # bake-latest:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Install curl and jq
-  #       run: sudo apt-get install -y curl jq
-  #     - name: Install gather Azure Devops Agent versions from API
-  #       id: version_provider
-  #       run: |
-  #         VERSION=$(curl -fsSN \
-  #           -H "Accept: application/vnd.github.v3+json" \
-  #           "https://api.github.com/repos/microsoft/azure-pipelines-agent/releases?per_page=2" |
-  #           jq -r '.[] | select(.prerelease==false) | .name ' |
-  #           cut -d 'v' -f2)
-  #         echo "::set-output name=version::$VERSION"
-  #     - name: debug
-  #       run: |
-  #         echo "::debug:: ${{steps.version_provider.outputs.version}}"
-
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
-
-  #     - name: Login to DockerHub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  #     - name: Build and push
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         push: true
-  #         tags: |
-  #           dcagatay/azp-agent-dind:latest
-  #           dcagatay/azp-agent-dind:${{steps.version_provider.outputs.version}}
-  #         build-args: |
-  #           AGENT_VERSION=${{steps.version_provider.outputs.version}}
+            AGENT_VERSION=${{steps.version_provider.outputs.version}}
