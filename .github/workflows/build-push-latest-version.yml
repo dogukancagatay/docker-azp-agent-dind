@@ -7,8 +7,6 @@ on:
       - "README.md"
       - "LICENSE"
       - "docker-compose.yml"
-      - "check-agent-releases.sh"
-      - ".github/workflows/build-push-all-versions.yml"
     branches:
       - master
 
