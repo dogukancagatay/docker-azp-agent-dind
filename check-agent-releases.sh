@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+# set -x
 
 _GIT_REPOSITORY_NAME="${REPO:-microsoft/azure-pipelines-agent}"
 _NUM_RELEASES="${NUM_RELEASES:-100}"
