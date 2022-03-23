@@ -33,7 +33,7 @@ jobs:
           echo "::debug:: ${{steps.version_provider.outputs.version}}"
     # this step is needed, so the output gets to the next defined job
     outputs:
-        version: ${{ steps.version_provider.outputs.version }}
+      version: ${{ steps.version_provider.outputs.version }}
 
   bake-version:
     runs-on: ubuntu-latest
@@ -100,4 +100,3 @@ jobs:
   #           dcagatay/azp-agent-dind:${{steps.version_provider.outputs.version}}
   #         build-args: |
   #           AGENT_VERSION=${{steps.version_provider.outputs.version}}
-
