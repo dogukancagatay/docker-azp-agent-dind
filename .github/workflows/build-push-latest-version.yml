@@ -1,14 +1,14 @@
 name: ci
 on:
   schedule:
-    - cron: '30 6 5 * *' # Run monthly
+    - cron: "30 6 5 * *" # Run monthly
   push:
     paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-      - 'docker-compose.yml'
-      - 'check-agent-releases.sh'
-      - '.github/workflows/build-push-all-versions.yml'
+      - "README.md"
+      - "LICENSE"
+      - "docker-compose.yml"
+      - "check-agent-releases.sh"
+      - ".github/workflows/build-push-all-versions.yml"
     branches:
       - master
 
@@ -20,18 +20,15 @@ jobs:
         uses: actions/checkout@v2
       - name: Install curl and jq
         run: sudo apt-get install -y curl jq
-      - name: check releases
-        run: NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp .
       - id: output_data
         run: echo "::set-output name=matrix::$(NUM_RELEASES=2 ./check-agent-releases.sh | jq  --raw-input . | jq --slurp .)"
     # this step is needed, so the output gets to the next defined job
     outputs:
-        matrix: ${{ steps.output_data.outputs.matrix }}
+      matrix: ${{ steps.output_data.outputs.matrix }}
 
   bake-latest:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -55,4 +52,4 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-          version: ${{fromJson(needs.provide_matrix.outputs.matrix)}}
+        version: ${{fromJson(needs.provide_matrix.outputs.matrix)}}
