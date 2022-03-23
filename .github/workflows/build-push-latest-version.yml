@@ -5,9 +5,10 @@ on:
     - cron: "30 6 5 * *" # Run monthly
   push:
     paths-ignore:
-      - "README.md"
-      - "LICENSE"
-      - "docker-compose.yml"
+      - README.md
+      - LICENSE
+      - docker-compose.yml
+      - .github/workflows/build-push-all-versions.yml
     branches:
       - master
 
