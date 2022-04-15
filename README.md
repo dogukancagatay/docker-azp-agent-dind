@@ -6,20 +6,7 @@ Image @DockerHub: [dcagatay/azp-agent-dind](https://hub.docker.com/r/dcagatay/az
 
 ## Tags
 
-- `2.200.2`, `latest`
-- `2.198.3`
-- `2.198.2`
-- `2.196.2`
-- `2.195.2`
-- `2.195.1`
-- `2.195.0`
-- `2.194.0`
-- `2.193.1`
-- `2.193.0`
-- `2.192.0`
-- `2.191.1`
-
-You can check all tags from [Docker Hub page](https://hub.docker.com/r/dcagatay/azp-agent-dind/tags?page=1&ordering=last_updated).
+Images are updated with new versions of Azure Devops Pipeline agent are released, see [tags](https://hub.docker.com/r/dcagatay/azp-agent-dind/tags) tab for the up to date tag list. Or use `latest`.
 
 ## Usage
 
